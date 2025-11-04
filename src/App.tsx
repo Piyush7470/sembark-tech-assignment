@@ -1,26 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { storeContext } from './store';
+import cartStore from './store/CartStore';
+import HomePage from './pages/HomePage';
+import ProductDetailPage from './pages/ProductDetailPage';
+import CartPage from './pages/CartPage';
+import Footer from './components/Footer';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App: React.FC = () => {
+    return (
+        <storeContext.Provider value={{ cartStore }}>
+            <Router>
+                <div style={{ paddingBottom: '60px' }}>
+                    <Routes>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/product/:id/details" element={<ProductDetailPage />} />
+                        <Route path="/cart" element={<CartPage />} />
+                    </Routes>
+                </div>
+                <Footer />
+            </Router>
+        </storeContext.Provider>
+    );
+};
 
 export default App;
